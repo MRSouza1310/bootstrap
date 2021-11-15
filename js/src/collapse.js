@@ -261,7 +261,7 @@ class Collapse extends BaseComponent {
   static jQueryInterface(config) {
     return this.each(function () {
       const _config = {}
-      if (typeof config === 'string' && /show|hide/.test(config)) {
+      if (typeof config === 'string' && ['show', 'hide'].includes(config)) {
         _config.toggle = false
       }
 

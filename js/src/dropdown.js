@@ -384,7 +384,7 @@ class Dropdown extends BaseComponent {
         (context._config.autoClose === 'outside' && isMenuTarget) ||
         // Tab navigation through the dropdown menu or events from contained inputs shouldn't close the menu
         (context._menu.contains(event.target) &&
-          ((event.type === 'keyup' && event.key === TAB_KEY) || /input|select|option|textarea|form/i.test(event.target.tagName)))
+          ((event.type === 'keyup' && event.key === TAB_KEY) || ['input', 'select', 'option', 'textarea', 'form'].includes(event.target.tagName.toLowerCase())))
       ) {
         continue
       }
@@ -411,7 +411,7 @@ class Dropdown extends BaseComponent {
     //  - If key is other than escape
     //    - If key is not up or down => not a dropdown command
     //    - If trigger inside the menu => not a dropdown command
-    if (/input|textarea/i.test(event.target.tagName) ?
+    if (['input', 'textarea'].includes(event.target.tagName.toLowerCase()) ?
       event.key === SPACE_KEY || (event.key !== ESCAPE_KEY &&
       ((event.key !== ARROW_DOWN_KEY && event.key !== ARROW_UP_KEY) ||
         event.target.closest(SELECTOR_MENU))) :

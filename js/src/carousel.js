@@ -267,7 +267,7 @@ class Carousel extends BaseComponent {
   }
 
   _keydown(event) {
-    if (/input|textarea/i.test(event.target.tagName)) {
+    if (['input', 'textarea'].includes(event.target.tagName.toLowerCase())) {
       return
     }
 
