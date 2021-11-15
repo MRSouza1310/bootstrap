@@ -375,25 +375,21 @@ class Dropdown extends BaseComponent {
         continue
       }
 
-      const relatedTarget = { relatedTarget: context._element }
       const composedPath = event.composedPath()
       const isMenuTarget = composedPath.includes(context._menu)
 
       if (
         composedPath.includes(context._element) ||
         (context._config.autoClose === 'inside' && !isMenuTarget) ||
-        (context._config.autoClose === 'outside' && isMenuTarget)
+        (context._config.autoClose === 'outside' && isMenuTarget) ||
+        // Tab navigation through the dropdown menu or events from contained inputs shouldn't close the menu
+        (context._menu.contains(event.target) &&
+          ((event.type === 'keyup' && event.key === TAB_KEY) || /input|select|option|textarea|form/i.test(event.target.tagName)))
       ) {
         continue
       }
 
-      // Tab navigation through the dropdown menu or events from contained inputs shouldn't close the menu
-      if (
-        context._menu.contains(event.target) &&
-        ((event.type === 'keyup' && event.key === TAB_KEY) || /input|select|option|textarea|form/i.test(event.target.tagName))
-      ) {
-        continue
-      }
+      const relatedTarget = { relatedTarget: context._element }
 
       if (event.type === 'click') {
         relatedTarget.clickEvent = event
